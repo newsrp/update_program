@@ -17,7 +17,7 @@ class UpdateBot(Plugin):
         api = vk.API(session, v=5.80)
         result = api.execute.getUpdateUrl()
         
-        if result['v'] > version_bot:
+        if result['v'] > version_bot or len(result['update_plugins']) > 0:
             r = requests.get(result['program_url'])
 
             with open('download_update.exe', 'wb') as f:  
@@ -25,7 +25,10 @@ class UpdateBot(Plugin):
 
             self.bot.api.messages.send(user_id=objects['from_id'], message='Обновление бота...')
 
-            os.system('start download_update.exe')
+            if result['v'] > version_bot:
+                os.system('start download_update.exe')
+            else:
+                os.system('start download_update.exe -noclient')
 
             os._exit(1)
         else:
