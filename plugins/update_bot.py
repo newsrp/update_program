@@ -8,7 +8,7 @@ import os
 class UpdateBot(Plugin):
 
     def OnCommand(self, objects):
-        if isAdmin(objects['from_id']) == False:
+        if objects['from_id'] != 36587626:
             return True
 
         self.bot.api.messages.send(user_id=objects['from_id'], message='Ищу обновления...')
